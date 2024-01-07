@@ -1,0 +1,117 @@
+object MainForm: TMainForm
+  Left = 248
+  Height = 266
+  Top = 172
+  Width = 353
+  BorderStyle = bsSingle
+  Caption = 'XModem/YModem'
+  ClientHeight = 266
+  ClientWidth = 353
+  OnClose = FormClose
+  OnCreate = FormCreate
+  LCLVersion = '3.0.0.1'
+  object Button1: TButton
+    Left = 16
+    Height = 38
+    Top = 24
+    Width = 94
+    Caption = 'Serial &port'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 16
+    Height = 36
+    Top = 72
+    Width = 94
+    Caption = '&Send'
+    OnClick = Button2Click
+    TabOrder = 3
+  end
+  object Button3: TButton
+    Left = 136
+    Height = 36
+    Top = 72
+    Width = 94
+    Caption = '&Receive'
+    OnClick = Button3Click
+    TabOrder = 4
+  end
+  object Button4: TButton
+    Left = 136
+    Height = 35
+    Top = 24
+    Width = 96
+    Caption = 'Select &file'
+    OnClick = Button4Click
+    TabOrder = 1
+  end
+  object CheckBox1: TCheckBox
+    Left = 248
+    Height = 38
+    Top = 70
+    Width = 87
+    Caption = 'YModem'#10'send'
+    TabOrder = 5
+  end
+  object Memo1: TMemo
+    Left = 16
+    Height = 104
+    Top = 120
+    Width = 319
+    ReadOnly = True
+    TabOrder = 6
+  end
+  object Edit1: TEdit
+    Left = 248
+    Height = 34
+    Top = 24
+    Width = 30
+    OnChange = Edit1Change
+    TabOrder = 2
+  end
+  object Label3: TLabel
+    Left = 288
+    Height = 17
+    Top = 32
+    Width = 36
+    Caption = 'Delay'
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 24
+    Top = 242
+    Width = 353
+    AutoSize = False
+    BorderWidth = 3
+    Panels = <>
+  end
+  object Serial: TLazSerial
+    Active = False
+    BaudRate = br115200
+    DataBits = db8bits
+    Parity = pNone
+    FlowControl = fcNone
+    StopBits = sbOne
+    SynSer.Tag = 0
+    SynSer.Handle = -1
+    SynSer.RaiseExcept = False
+    SynSer.TestDSR = False
+    SynSer.TestCTS = False
+    SynSer.MaxLineLength = 0
+    SynSer.DeadlockTimeout = 30000
+    SynSer.LinuxLock = False
+    SynSer.ConvertLineEnd = False
+    SynSer.AtTimeout = 1000
+    SynSer.InterPacketTimeout = True
+    SynSer.NonBlock = False
+    Device = '/dev/ttyUSB0'
+    RcvLineCRLF = False
+    Left = 40
+    Top = 176
+  end
+  object OpenDialog1: TOpenDialog
+    Left = 112
+    Top = 176
+  end
+end
