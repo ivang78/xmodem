@@ -496,15 +496,17 @@ end;
 // Receive file
 Procedure TMainForm.XModem_receiveFile(fileName: string);
 var
-  inChar, j: byte;
+  inChar, lastPacket, j: byte;
   receiveBuffer: array[1..133] of byte;
   dataFile: file of byte;
-  foundEof, syncRead: boolean;  
+  foundEof, syncRead: boolean;
+  fPos: longint;
 begin
   // Rewind data file before sending the file..
   system.Assign(dataFile, fileName);
-  Rewrite(dataFile);
+  system.Rewrite(dataFile);
 
+  lastPacket := 0;
   // Receive sync from transmitter
   inChar := XModem_receiveSync(res);
   if res = true then
@@ -543,6 +545,15 @@ begin
 	begin
 	  // Send ACK
 	  writeSerialByte(ACK);
+          // Repeat packet? Rewind to previous packet
+          if receiveBuffer[2] = lastPacket then
+          begin
+            fPos := system.FilePos(dataFile);
+            if fPos > packetLen then
+               fPos := fPos - packetLen;
+            system.Seek(dataFile, fPos);
+          end;
+          lastPacket := receiveBuffer[2];
 	  // Save part of file...
 	  for j := 4 to packetLen + 3 do
 	    Write(dataFile, receiveBuffer[j]);
@@ -563,6 +574,7 @@ begin
 	writeSerialByte(ACK);
 		
 	foundEof := true;
+        system.Close(dataFile);
 		
 	XModem_addLog('Receive OK');
       end;
